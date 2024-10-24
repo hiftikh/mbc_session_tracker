@@ -11,7 +11,7 @@ export interface PlayerState {
 }
 
 interface PlayerListState {
-  allPlayerList: PlayerState[];
+  allPlayersList: PlayerState[];
   playerList: PlayerState[];
   isCleared: boolean;
 }
@@ -27,7 +27,7 @@ const usePlayerStore = create<PlayerListState & PlayerListActions>()(
   devtools(
     persist(
       (set, get) => ({
-        allPlayerList: playersJSON,
+        allPlayersList: playersJSON,
         playerList: [],
         isCleared: false,
         setClear: (clear) => {

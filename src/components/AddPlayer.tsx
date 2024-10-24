@@ -21,10 +21,11 @@ import usePlayerStore from "./hooks/usePlayerStore";
 import { PlayerState as PlayerType } from "./hooks/usePlayerStore";
 
 export default function AddPlayer() {
-  const allPlayerList = usePlayerStore((state) => state.allPlayerList);
+  const allPlayersList = usePlayerStore((state) => state.allPlayersList);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const [updatePlayerList, setUpdatePlayerList] = React.useState(allPlayerList);
+  const [updatePlayerList, setUpdatePlayerList] =
+    React.useState(allPlayersList);
   const activePlayerListStore = usePlayerStore((state) => state.playerList);
   const addPlayerAction = usePlayerStore((state) => state.addPlayer);
   const isClearedAction = usePlayerStore((state) => state.isCleared);
@@ -32,7 +33,7 @@ export default function AddPlayer() {
 
   useEffect(() => {
     if (isClearedAction) {
-      setUpdatePlayerList(allPlayerList);
+      setUpdatePlayerList(allPlayersList);
       setClearStore(false);
     }
   }, [isClearedAction]);
@@ -42,9 +43,11 @@ export default function AddPlayer() {
 
     const newPlayer: PlayerType = {
       display_name: value,
-      id: Date.now(),
+      id:
+        allPlayersList.find((player: any) => player.display_name === value)
+          ?.id || -1,
       color:
-        allPlayerList.find((player: any) => player.display_name === value)
+        allPlayersList.find((player: any) => player.display_name === value)
           ?.color || "",
     };
 
