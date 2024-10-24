@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension";
 import playersJSON from "@/json/players.json";
-import { timeStamp } from "console";
 
 export interface PlayerState {
   display_name: string;
@@ -19,7 +18,7 @@ interface PlayerListState {
 
 interface WaitlistState {
   waitlists: PlayerListState[];
-  timestamp: number;
+  // timestamp: number;
 }
 
 interface PlayerListActions {
@@ -28,7 +27,7 @@ interface PlayerListActions {
   removePlayer: (id: number) => void;
   setActivePlayerList: (list: PlayerState[]) => void;
   setInActivePlayersList: (list: PlayerState[]) => void;
-  setWaitListHistory: (list: WaitlistState[]) => void;
+  // setWaitListHistory: (list: WaitlistState[]) => void;
 }
 
 const usePlayerStore = create<
@@ -46,9 +45,9 @@ const usePlayerStore = create<
         setInActivePlayersList: (list) => {
           set({ inActivePlayersList: list });
         },
-        setWaitListHistory: (list) => {
-          // set({ waitlists: [...get().waitlists, [list, Date.now()]] });
-        },
+        // setWaitListHistory: (list) => {
+        //   // set({ waitlists: [...get().waitlists, [list, Date.now()]] });
+        // },
         setActivePlayerList: (list) => {
           set({ activePlayerList: list });
         },

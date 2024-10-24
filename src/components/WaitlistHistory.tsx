@@ -1,14 +1,14 @@
-import usePlayerStore from "./hooks/usePlayerStore";
+// import usePlayerStore from "./hooks/usePlayerStore";
 
 export default function WaitlistHistory() {
-  const { waitlists } = usePlayerStore((state) => state);
+  //   const { waitlists } = usePlayerStore((state) => state);
   //   console.log(waitlistHistory);
 
   return (
     <>
-      {waitlists.map((waitlist, index) => {
+      {/* {waitlists.map((waitlist, index) => {
         <div key={index}>
-          {/* {waitlist} */}
+          {waitlist}
           <table>
             <thead>
               <tr>
@@ -17,7 +17,7 @@ export default function WaitlistHistory() {
             </thead>
           </table>
         </div>;
-      })}
+      })} */}
     </>
   );
 }

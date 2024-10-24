@@ -8,7 +8,8 @@ import { colorVariantsTag } from "@/lib/utils";
 export default function WaitListTeam() {
   const { activePlayerList } = usePlayerStore();
   const removePlayerAction = usePlayerStore((state) => state.removePlayer);
-  const { setWaitListHistory, clearHistory } = usePlayerStore((state) => state);
+  // const { setWaitListHistory, clearHistory } = usePlayerStore((state) => state);
+  const { clearHistory } = usePlayerStore((state) => state);
 
   const handleRemoveBtn = (player: PlayerType) => {
     removePlayerAction(player.id);
