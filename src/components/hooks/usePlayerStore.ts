@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension";
 import playersJSON from "@/json/players.json";
-import { orderByAlphabetically } from "@/lib/utils";
+import { timeStamp } from "console";
 
 export interface PlayerState {
   display_name: string;
@@ -15,27 +15,42 @@ interface PlayerListState {
   allPlayersList: PlayerState[];
   activePlayerList: PlayerState[];
   inActivePlayersList: PlayerState[];
-  // waitlistHistory: [];
+}
+
+interface WaitlistState {
+  waitlists: PlayerListState[];
+  timestamp: number;
 }
 
 interface PlayerListActions {
   addPlayer: (newPlayer: PlayerState) => void;
   clearHistory: () => void;
   removePlayer: (id: number) => void;
+  setActivePlayerList: (list: PlayerState[]) => void;
   setInActivePlayersList: (list: PlayerState[]) => void;
+  setWaitListHistory: (list: WaitlistState[]) => void;
 }
 
-const usePlayerStore = create<PlayerListState & PlayerListActions>()(
+const usePlayerStore = create<
+  PlayerListState & PlayerListActions & WaitlistState
+>()(
   devtools(
     persist(
       (set, get) => ({
         allPlayersList: playersJSON,
         inActivePlayersList: playersJSON,
         activePlayerList: [],
+        waitlists: [],
+        timestamp: 0,
         isCleared: false,
-
         setInActivePlayersList: (list) => {
           set({ inActivePlayersList: list });
+        },
+        setWaitListHistory: (list) => {
+          // set({ waitlists: [...get().waitlists, [list, Date.now()]] });
+        },
+        setActivePlayerList: (list) => {
+          set({ activePlayerList: list });
         },
         addPlayer: (newPlayer) => {
           set({

@@ -8,9 +8,15 @@ import { colorVariantsTag } from "@/lib/utils";
 export default function WaitListTeam() {
   const { activePlayerList } = usePlayerStore();
   const removePlayerAction = usePlayerStore((state) => state.removePlayer);
+  const { setWaitListHistory, clearHistory } = usePlayerStore((state) => state);
 
   const handleRemoveBtn = (player: PlayerType) => {
     removePlayerAction(player.id);
+  };
+
+  const onClickHandle = () => {
+    // setWaitListHistory(activePlayerList);
+    clearHistory();
   };
 
   return (
@@ -45,6 +51,10 @@ export default function WaitListTeam() {
             </div>
           ))}
       </div>
+      <br />
+      <Button disabled={activePlayerList.length !== 4} onClick={onClickHandle}>
+        Confirm Team
+      </Button>
     </>
   );
 }
