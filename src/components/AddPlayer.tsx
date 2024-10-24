@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,44 +16,40 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { colorVariantsIcon } from "@/lib/utils";
 
 import usePlayerStore from "./hooks/usePlayerStore";
 import { PlayerState as PlayerType } from "./hooks/usePlayerStore";
 
 export default function AddPlayer() {
-  const allPlayersList = usePlayerStore((state) => state.allPlayersList);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const [updatePlayerList, setUpdatePlayerList] =
-    React.useState(allPlayersList);
-  const activePlayerListStore = usePlayerStore((state) => state.playerList);
-  const addPlayerAction = usePlayerStore((state) => state.addPlayer);
-  const isClearedAction = usePlayerStore((state) => state.isCleared);
-  const setClearStore = usePlayerStore((state) => state.setClear);
+  const allPlayersList = usePlayerStore((state) => state.allPlayersList);
+  const activePlayerList = usePlayerStore((state) => state.activePlayerList);
 
-  useEffect(() => {
-    if (isClearedAction) {
-      setUpdatePlayerList(allPlayersList);
-      setClearStore(false);
-    }
-  }, [isClearedAction]);
+  const { inActivePlayersList, setInActivePlayersList } = usePlayerStore(
+    (state) => state
+  );
+  const addPlayerAction = usePlayerStore((state) => state.addPlayer);
 
   const handleAddBtn = (e: any) => {
     e.preventDefault();
 
     const newPlayer: PlayerType = {
+      color:
+        allPlayersList.find((player: any) => player.display_name === value)
+          ?.color || "",
+      full_name:
+        allPlayersList.find((player: any) => player.display_name === value)
+          ?.full_name || "",
       display_name: value,
       id:
         allPlayersList.find((player: any) => player.display_name === value)
           ?.id || -1,
-      color:
-        allPlayersList.find((player: any) => player.display_name === value)
-          ?.color || "",
     };
 
-    // Remove selected players from list
-    setUpdatePlayerList(
-      updatePlayerList.filter((player: any) => player.display_name !== value)
+    setInActivePlayersList(
+      inActivePlayersList.filter((player: any) => player.display_name !== value)
     );
 
     addPlayerAction(newPlayer);
@@ -69,12 +65,12 @@ export default function AddPlayer() {
             role="combobox"
             aria-expanded={open}
             className="w-full justify-between"
-            disabled={activePlayerListStore.length === 4}
+            disabled={activePlayerList.length === 4}
           >
             {value
-              ? updatePlayerList.find(
+              ? inActivePlayersList.find(
                   (player: any) => player.display_name === value
-                )?.display_name
+                )?.full_name
               : "Search player.."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -85,7 +81,7 @@ export default function AddPlayer() {
             <CommandList>
               <CommandEmpty>No player found..</CommandEmpty>
               <CommandGroup>
-                {updatePlayerList.map((player: any) => (
+                {inActivePlayersList.map((player: any) => (
                   <CommandItem
                     key={player.id}
                     value={player.display_name}
@@ -94,15 +90,21 @@ export default function AddPlayer() {
                       setOpen(false);
                     }}
                   >
+                    <Circle
+                      fill={`${colorVariantsIcon[player.color]}`}
+                      strokeWidth={0}
+                      className="mr-2"
+                    />
+
+                    {player.display_name}
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
+                        "ml-2 h-4 w-4",
                         value === player.display_name
                           ? "opacity-100"
                           : "opacity-0"
                       )}
                     />
-                    {player.display_name}
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -113,7 +115,7 @@ export default function AddPlayer() {
       <Button
         className="text-white w-full md:w-auto"
         onClick={handleAddBtn}
-        disabled={activePlayerListStore.length === 4 || !value}
+        disabled={activePlayerList.length === 4 || !value}
       >
         Add Player
       </Button>

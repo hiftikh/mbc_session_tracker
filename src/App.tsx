@@ -7,7 +7,7 @@ import { Separator } from "./components/ui/separator";
 import WaitListTeam from "./components/WaitlistTeam";
 
 function App() {
-  const clearBtnAction = usePlayerStore((state) => state.clear);
+  const clearBtnAction = usePlayerStore((state) => state.clearHistory);
 
   return (
     <>

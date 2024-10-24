@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension";
 import playersJSON from "@/json/players.json";
+import { orderByAlphabetically } from "@/lib/utils";
 
 export interface PlayerState {
   display_name: string;
@@ -12,15 +13,16 @@ export interface PlayerState {
 
 interface PlayerListState {
   allPlayersList: PlayerState[];
-  playerList: PlayerState[];
-  isCleared: boolean;
+  activePlayerList: PlayerState[];
+  inActivePlayersList: PlayerState[];
+  // waitlistHistory: [];
 }
 
 interface PlayerListActions {
   addPlayer: (newPlayer: PlayerState) => void;
-  clear: () => void;
-  setClear: (clear: boolean) => void;
+  clearHistory: () => void;
   removePlayer: (id: number) => void;
+  setInActivePlayersList: (list: PlayerState[]) => void;
 }
 
 const usePlayerStore = create<PlayerListState & PlayerListActions>()(
@@ -28,20 +30,32 @@ const usePlayerStore = create<PlayerListState & PlayerListActions>()(
     persist(
       (set, get) => ({
         allPlayersList: playersJSON,
-        playerList: [],
+        inActivePlayersList: playersJSON,
+        activePlayerList: [],
         isCleared: false,
-        setClear: (clear) => {
-          set({ isCleared: clear });
+
+        setInActivePlayersList: (list) => {
+          set({ inActivePlayersList: list });
         },
         addPlayer: (newPlayer) => {
           set({
-            playerList: [...get().playerList, newPlayer],
+            activePlayerList: [...get().activePlayerList, newPlayer],
           });
         },
-        clear: () => set({ playerList: [], isCleared: true }),
+        clearHistory: () =>
+          set({
+            activePlayerList: [],
+            inActivePlayersList: playersJSON,
+          }),
         removePlayer: (playerID) =>
           set({
-            playerList: get().playerList.filter(
+            inActivePlayersList: [
+              ...get().inActivePlayersList,
+              get().activePlayerList.filter(
+                (player) => player.id === playerID
+              )[0],
+            ].sort((a, b) => a.display_name.localeCompare(b.display_name)),
+            activePlayerList: get().activePlayerList.filter(
               (player) => player.id !== playerID
             ),
           }),

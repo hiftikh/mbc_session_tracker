@@ -2,17 +2,17 @@ import { cn } from "@/lib/utils";
 import usePlayerStore from "./hooks/usePlayerStore";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
+import { PlayerState as PlayerType } from "./hooks/usePlayerStore";
+import { colorVariantsTag } from "@/lib/utils";
 
 export default function WaitListTeam() {
-  const { playerList } = usePlayerStore();
+  const { activePlayerList } = usePlayerStore();
   const removePlayerAction = usePlayerStore((state) => state.removePlayer);
 
-  const colorVariants: any = {
-    blue: "bg-blue-700",
-    red: "bg-red-700",
-    yellow: "bg-yellow-600",
-    green: "bg-green-600",
+  const handleRemoveBtn = (player: PlayerType) => {
+    removePlayerAction(player.id);
   };
+
   return (
     <>
       <h3 className="font-semibold tracking-tight text-xl text-secondary">
@@ -21,14 +21,14 @@ export default function WaitListTeam() {
       <p className="text-sm text-muted-foreground mb-5 ">
         Confirm your teammates.
       </p>
-      <div className="grid grid-cols-1 grid-rows-2 sm:grid-cols-2 gap-5">
-        {playerList &&
-          playerList.map((player: any) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {activePlayerList &&
+          activePlayerList.map((player: any) => (
             <div
               key={player.id}
               className={cn(
                 "w-full h-20 flex justify-center text-center items-center text-2xl text-white font-bold rounded-xl relative",
-                `${colorVariants[player.color]}`
+                `${colorVariantsTag[player.color]}`
               )}
             >
               <div>
@@ -36,7 +36,7 @@ export default function WaitListTeam() {
                   {player.display_name.toUpperCase()}
                 </div>
                 <Button
-                  onClick={() => removePlayerAction(player.id)}
+                  onClick={() => handleRemoveBtn(player)}
                   className="absolute -top-1 -right-2 text-white bg-transparent hover:bg-transparent"
                 >
                   <X />
