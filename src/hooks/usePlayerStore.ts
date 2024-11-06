@@ -28,6 +28,7 @@ interface PlayerActions {
   setInActivePlayersList: (list: PlayerState[]) => void;
   setWaitListHistory: (list: WaitListHistoryState) => void;
   clearHistory: () => void;
+  resetAll: () => void;
 }
 
 const usePlayerStore = create<
@@ -60,19 +61,26 @@ const usePlayerStore = create<
         setInActivePlayersList: (list) => {
           set({ inActivePlayersList: list });
         },
-        clearHistory: () => {
-          set({
-            activePlayerList: [],
-            inActivePlayersList: playersJSON,
-            // waitList: [],
-          });
-        },
         setWaitListHistory: (list) => {
           set({
             waitList: [...get().waitList, list],
           });
         },
+        clearHistory: () => {
+          set({
+            activePlayerList: [],
+            inActivePlayersList: playersJSON,
+          });
+        },
+        resetAll: () => {
+          set({
+            activePlayerList: [],
+            inActivePlayersList: playersJSON,
+            waitList: [],
+          });
+        },
       }),
+
       { name: "players" }
     )
   )
