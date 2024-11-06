@@ -3,7 +3,7 @@ import usePlayerStore from "./hooks/usePlayerStore";
 import { Button } from "./components/ui/button";
 import { Separator } from "./components/ui/separator";
 import WaitListTeam from "./components/WaitlistTeam";
-// import WaitlistHistory from "./components/WaitlistHistory";
+import WaitlistHistory from "./components/WaitlistHistory";
 
 function App() {
   const clearBtnAction = usePlayerStore((state) => state.clearHistory);
@@ -22,8 +22,8 @@ function App() {
               <Separator className="my-8" />
               <WaitListTeam />
               <Separator className="my-8" />
-              {/* <WaitlistHistory /> */}
-              {/* <Separator className="my-8" /> */}
+              <WaitlistHistory />
+              <Separator className="my-8" />
               <Button onClick={clearBtnAction}>Refresh History</Button>
             </div>
           </div>

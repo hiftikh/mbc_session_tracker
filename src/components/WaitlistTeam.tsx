@@ -32,7 +32,7 @@ export default function WaitListTeam() {
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {activePlayerList &&
-          activePlayerList.map((player: PlayerType) => (
+          activePlayerList.map((player) => (
             <div
               key={player.id}
               className={cn(

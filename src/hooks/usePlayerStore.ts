@@ -64,7 +64,7 @@ const usePlayerStore = create<
           set({
             activePlayerList: [],
             inActivePlayersList: playersJSON,
-            waitList: [],
+            // waitList: [],
           });
         },
         setWaitListHistory: (list) => {
