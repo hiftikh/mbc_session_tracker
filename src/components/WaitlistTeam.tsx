@@ -1,22 +1,24 @@
 import { cn } from "@/lib/utils";
-import usePlayerStore from "./hooks/usePlayerStore";
+import usePlayerStore from "../hooks/usePlayerStore";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
-import { PlayerState as PlayerType } from "./hooks/usePlayerStore";
+import { PlayerState as PlayerType } from "../hooks/usePlayerStore";
 import { colorVariantsTag } from "@/lib/utils";
 
 export default function WaitListTeam() {
   const { activePlayerList } = usePlayerStore();
   const removePlayerAction = usePlayerStore((state) => state.removePlayer);
-  // const { setWaitListHistory, clearHistory } = usePlayerStore((state) => state);
-  const { clearHistory } = usePlayerStore((state) => state);
+  const { setWaitListHistory, clearHistory } = usePlayerStore((state) => state);
 
   const handleRemoveBtn = (player: PlayerType) => {
     removePlayerAction(player.id);
   };
 
   const onClickHandle = () => {
-    // setWaitListHistory(activePlayerList);
+    setWaitListHistory({
+      players: activePlayerList,
+      timeStamp: new Date(),
+    });
     clearHistory();
   };
 
@@ -30,7 +32,7 @@ export default function WaitListTeam() {
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {activePlayerList &&
-          activePlayerList.map((player: any) => (
+          activePlayerList.map((player: PlayerType) => (
             <div
               key={player.id}
               className={cn(
@@ -53,7 +55,7 @@ export default function WaitListTeam() {
           ))}
       </div>
       <br />
-      <Button disabled={activePlayerList.length !== 4} onClick={onClickHandle}>
+      <Button disabled={activePlayerList?.length !== 4} onClick={onClickHandle}>
         Confirm Team
       </Button>
     </>

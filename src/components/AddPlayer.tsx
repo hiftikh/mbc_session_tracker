@@ -18,38 +18,35 @@ import {
 } from "@/components/ui/popover";
 import { colorVariantsIcon } from "@/lib/utils";
 
-import usePlayerStore from "./hooks/usePlayerStore";
-import { PlayerState as PlayerType } from "./hooks/usePlayerStore";
+import usePlayerStore from "../hooks/usePlayerStore";
+import { PlayerState as PlayerType } from "../hooks/usePlayerStore";
 
 export default function AddPlayer() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const allPlayersList = usePlayerStore((state) => state.allPlayersList);
   const activePlayerList = usePlayerStore((state) => state.activePlayerList);
-
   const { inActivePlayersList, setInActivePlayersList } = usePlayerStore(
     (state) => state
   );
   const addPlayerAction = usePlayerStore((state) => state.addPlayer);
 
-  const handleAddBtn = (e: any) => {
-    e.preventDefault();
+  const handleAddBtn = () => {
+    const findPlayer = allPlayersList.find(
+      (player: PlayerType) => player.display_name === value
+    );
 
     const newPlayer: PlayerType = {
-      color:
-        allPlayersList.find((player: any) => player.display_name === value)
-          ?.color || "",
-      full_name:
-        allPlayersList.find((player: any) => player.display_name === value)
-          ?.full_name || "",
+      id: findPlayer?.id || -1,
       display_name: value,
-      id:
-        allPlayersList.find((player: any) => player.display_name === value)
-          ?.id || -1,
+      color: findPlayer?.color || "",
+      full_name: findPlayer?.full_name || "",
     };
 
     setInActivePlayersList(
-      inActivePlayersList.filter((player: any) => player.display_name !== value)
+      inActivePlayersList.filter(
+        (player: PlayerType) => player.display_name !== value
+      )
     );
 
     addPlayerAction(newPlayer);
@@ -69,7 +66,7 @@ export default function AddPlayer() {
           >
             {value
               ? inActivePlayersList.find(
-                  (player: any) => player.display_name === value
+                  (player: PlayerType) => player.display_name === value
                 )?.full_name
               : "Search player.."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -81,7 +78,7 @@ export default function AddPlayer() {
             <CommandList>
               <CommandEmpty>No player found..</CommandEmpty>
               <CommandGroup>
-                {inActivePlayersList.map((player: any) => (
+                {inActivePlayersList.map((player: PlayerType) => (
                   <CommandItem
                     key={player.id}
                     value={player.display_name}
