@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-black">
-        <div className="sm:mx-auto sm:w-8/12 ">
+        <div className="mx-auto w-full md:w-9/12 ">
           <h1 className="text-center text-3xl font-bold text-white mb-3">
             MBC Session Tracker
           </h1>
