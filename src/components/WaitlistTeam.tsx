@@ -60,7 +60,7 @@ export default function WaitListTeam() {
               </div>
             </div>
           ))}
-        {[...Array(4 - activePlayerList.length)].map((e, i) => (
+        {[...Array(4 - activePlayerList.length)].map((i) => (
           <div
             key={i}
             className={cn(
