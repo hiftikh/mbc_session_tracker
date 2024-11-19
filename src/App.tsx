@@ -1,13 +1,11 @@
-import PlayerSelection from "./components/PlayerSelection";
-import usePlayerStore from "./hooks/usePlayerStore";
-import { Button } from "./components/ui/button";
-import { Separator } from "./components/ui/separator";
-import WaitListTeam from "./components/WaitlistTeam";
-import WaitlistHistory from "./components/WaitlistHistory";
+import { Separator } from "@/components/ui/separator";
+
+import PlayerSelection from "@/components/PlayerSelection";
+import WaitListTeam from "@/components/WaitlistTeam";
+import WaitlistHistory from "@/components/WaitlistHistory";
+import ResetButton from "./components/ResetButton";
 
 function App() {
-  const { resetAll } = usePlayerStore((state) => state);
-
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-black">
@@ -23,7 +21,7 @@ function App() {
               <Separator className="my-8" />
               <WaitlistHistory />
               <Separator className="my-8" />
-              <Button onClick={resetAll}>Reset All</Button>
+              <ResetButton />
             </div>
           </div>
         </div>
