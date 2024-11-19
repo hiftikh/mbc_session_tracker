@@ -45,12 +45,15 @@ export default function WaitlistHistory() {
 
   const waitlistData = waitList.map((list, index) => {
     const formatTime = new Date(list.timeStamp?.toString() as string);
-    const formatedTime = `${formatTime.toLocaleTimeString()}`;
+    const formatedTime = `${formatTime.toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+    })}`;
 
     return (
       <TableRow key={index}>
-        <TableHead>{index + 1}</TableHead>
-        <TableHead>{formatedTime}</TableHead>
+        <TableHead className="w-[50px] text-center">{index + 1}</TableHead>
+        <TableHead className="w-[150px]">{formatedTime}</TableHead>
         <TableHead>
           {list.players &&
             list.players.map((player) => {
@@ -85,7 +88,7 @@ export default function WaitlistHistory() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Game #</TableHead>
+              <TableHead>Game#</TableHead>
               <TableHead>Start Time</TableHead>
               <TableHead>Players</TableHead>
             </TableRow>

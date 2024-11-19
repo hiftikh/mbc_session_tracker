@@ -7,10 +7,10 @@ import { PlayerState as PlayerType } from "../hooks/usePlayerStore";
 import { colorVariantsTag } from "@/lib/utils";
 
 export default function WaitListTeam() {
+  const { toast } = useToast();
   const { activePlayerList } = usePlayerStore();
   const { removePlayer } = usePlayerStore((state) => state);
   const { setWaitListHistory, clearHistory } = usePlayerStore((state) => state);
-  const { toast } = useToast();
 
   const handleRemoveBtn = (player: PlayerType) => {
     removePlayer(player.id);
@@ -23,9 +23,7 @@ export default function WaitListTeam() {
     });
     clearHistory();
     toast({
-      title: "Confirmed",
-      description: "Players have been added to the waitlist.",
-      className: "bg-green-100",
+      title: "Added to waitlist",
       duration: 4000,
     });
   };
@@ -38,7 +36,8 @@ export default function WaitListTeam() {
       <p className="text-sm text-muted-foreground mb-5 ">
         Confirm your teammates.
       </p>
-      <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {activePlayerList &&
           activePlayerList.map((player) => (
             <div
@@ -61,6 +60,16 @@ export default function WaitListTeam() {
               </div>
             </div>
           ))}
+        {[...Array(4 - activePlayerList.length)].map((e, i) => (
+          <div
+            key={i}
+            className={cn(
+              "w-full h-20 flex justify-center text-center items-center text-2xl text-black/20 font-bold rounded-xl relative border-dashed border-4"
+            )}
+          >
+            <div className="tracking-wide">PLAYER</div>
+          </div>
+        ))}
       </div>
       <br />
       <Button disabled={activePlayerList?.length !== 4} onClick={onClickHandle}>
