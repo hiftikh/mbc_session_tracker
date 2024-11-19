@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function orderByAlphabetically(a: any, b: any) {
+export function orderByAlphabetically(a: string, b: string) {
   return a > b ? 1 : a < b ? -1 : 0;
 }
 

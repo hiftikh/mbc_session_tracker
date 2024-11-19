@@ -12,17 +12,6 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Trash2, Pencil } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import Alert from "./Alert";
 
 export default function WaitlistHistory() {
@@ -34,13 +23,12 @@ export default function WaitlistHistory() {
   const handleDownloadAsCVSBtn = () => {
     const waitListData = waitList
       .map((entry) => {
-        let playersList;
         const formatTime = new Date(entry.timeStamp?.toString() as string);
         const formatedTime = `${formatTime.toLocaleTimeString()}`;
         const formatedDate = `${formatTime.toLocaleDateString()}`;
-        playersList = entry.players
+        const playersList = entry.players
           ?.map((player) => player.display_name)
-          .join(", ");
+          .join(",");
         return `${formatedDate},${formatedTime},${playersList}`;
       })
       .join("\n");
