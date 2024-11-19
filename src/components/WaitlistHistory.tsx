@@ -1,5 +1,6 @@
 import React from "react";
 import usePlayerStore from "@/hooks/usePlayerStore";
+import { colorVariantsTag } from "@/lib/utils";
 
 import {
   Table,
@@ -11,6 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+import { Badge } from "@/components/ui/badge";
 
 export default function WaitlistHistory() {
   const { waitList } = usePlayerStore((state) => state);
@@ -25,12 +28,18 @@ export default function WaitlistHistory() {
         <TableHead>{formatedTime}</TableHead>
         <TableHead>
           {list.players &&
-            list.players.map((player, index) => {
+            list.players.map((player) => {
               return (
-                <React.Fragment key={player.id}>
+                <Badge
+                  key={player.id}
+                  variant="outline"
+                  className={cn(
+                    "mr-1 text-white",
+                    `${colorVariantsTag[player.color]}`
+                  )}
+                >
                   {player.display_name}
-                  {index !== 3 ? ", " : ""}
-                </React.Fragment>
+                </Badge>
               );
             })}
         </TableHead>
