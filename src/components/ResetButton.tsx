@@ -24,7 +24,7 @@ export default function ResetButton() {
       title: "Completed",
       description: "Waitlist Team and Waitlist History have been reset.",
       className: "bg-green-100",
-      duration: 2000,
+      duration: 4000,
     });
   };
 
