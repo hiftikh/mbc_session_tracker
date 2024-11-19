@@ -53,7 +53,7 @@ export default function WaitlistHistory() {
     return (
       <TableRow key={index}>
         <TableHead className="w-[50px] text-center">{index + 1}</TableHead>
-        <TableHead className="w-[150px]">{formatedTime}</TableHead>
+        <TableHead className="w-[120px] text-center">{formatedTime}</TableHead>
         <TableHead>
           {list.players &&
             list.players.map((player) => {
@@ -62,7 +62,7 @@ export default function WaitlistHistory() {
                   key={player.id}
                   variant="outline"
                   className={cn(
-                    "mr-1 text-white",
+                    "mr-2 my-1 text-white text-base px-5",
                     `${colorVariantsTag[player.color]}`
                   )}
                 >
