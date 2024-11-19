@@ -26,6 +26,7 @@ interface PlayerActions {
   addPlayer: (newPlayer: PlayerState) => void;
   removePlayer: (id: number) => void;
   setInActivePlayersList: (list: PlayerState[]) => void;
+  deleteFromWaitListHistory: (id: Date) => void;
   setWaitListHistory: (list: WaitListHistoryState) => void;
   clearHistory: () => void;
   resetAll: () => void;
@@ -68,6 +69,12 @@ const usePlayerStore = create<
           set({
             waitList: [...get().waitList, list],
           });
+        },
+        deleteFromWaitListHistory: (timestamp) => {
+          const findPlayers = get().waitList.filter(
+            (waitlist) => waitlist.timeStamp !== timestamp
+          );
+          set({ waitList: findPlayers });
         },
         clearHistory: () => {
           set({

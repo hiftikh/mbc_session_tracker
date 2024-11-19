@@ -1,19 +1,7 @@
 import usePlayerStore from "@/hooks/usePlayerStore";
 import { useToast } from "@/hooks/use-toast";
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import React from "react";
+import Alert from "./Alert";
+import { Button } from "./ui/button";
 
 export default function ResetButton() {
   const { resetAll } = usePlayerStore((state) => state);
@@ -28,23 +16,13 @@ export default function ResetButton() {
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button>Reset All</Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            Waitlist Team and History sections.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onClickHandle}>Reset</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Alert
+      trigger={<Button>Reset All</Button>}
+      title="Are you absolutely sure?"
+      description="This action cannot be undone. This will permanently delete your
+            Waitlist Team and History sections."
+      action={onClickHandle}
+      actionLabel="Reset"
+    />
   );
 }

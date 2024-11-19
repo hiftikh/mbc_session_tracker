@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import usePlayerStore from "@/hooks/usePlayerStore";
+import { useToast } from "@/hooks/use-toast";
 import { colorVariantsTag } from "@/lib/utils";
-
 import {
   Table,
   TableBody,
@@ -10,13 +10,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { Badge } from "@/components/ui/badge";
+import { Trash2, Pencil } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import Alert from "./Alert";
 
 export default function WaitlistHistory() {
-  const { waitList } = usePlayerStore((state) => state);
+  const { waitList, deleteFromWaitListHistory } = usePlayerStore(
+    (state) => state
+  );
+  const { toast } = useToast();
 
-  const onClickBtnHandle = () => {
+  const handleDownloadAsCVSBtn = () => {
     const waitListData = waitList
       .map((entry) => {
         let playersList;
@@ -41,6 +56,14 @@ export default function WaitlistHistory() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleDeleteWaitlist = (timeStamp: Date) => {
+    deleteFromWaitListHistory(timeStamp);
+    toast({
+      description: "Waitlist has been deleted.",
+      duration: 4000,
+    });
   };
 
   const waitlistData = waitList.map((list, index) => {
@@ -71,6 +94,22 @@ export default function WaitlistHistory() {
               );
             })}
         </TableHead>
+        <TableHead className="w-[120px] text-center flex mx-auto">
+          <Button variant="ghost" disabled>
+            <Pencil />
+          </Button>
+          <Alert
+            trigger={
+              <Button variant="ghost">
+                <Trash2 />
+              </Button>
+            }
+            title="Are you absolutely sure?"
+            description="This action cannot be undone."
+            action={() => handleDeleteWaitlist(list.timeStamp as Date)}
+            actionLabel="Delete"
+          />
+        </TableHead>
       </TableRow>
     );
   });
@@ -88,9 +127,10 @@ export default function WaitlistHistory() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Game#</TableHead>
-              <TableHead>Start Time</TableHead>
+              <TableHead className="text-center">Game#</TableHead>
+              <TableHead className="text-center">Start Time</TableHead>
               <TableHead>Players</TableHead>
+              <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>{waitlistData}</TableBody>
@@ -101,7 +141,7 @@ export default function WaitlistHistory() {
         <Button
           disabled={!waitList}
           className="mx-auto text-center"
-          onClick={onClickBtnHandle}
+          onClick={handleDownloadAsCVSBtn}
         >
           Save History as CSV
         </Button>
