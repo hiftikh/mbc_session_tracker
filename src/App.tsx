@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/separator";
+import { Toaster } from "@/components/ui/toaster";
 
 import PlayerSelection from "@/components/PlayerSelection";
 import WaitListTeam from "@/components/WaitlistTeam";
@@ -22,6 +23,7 @@ function App() {
               <WaitlistHistory />
               <Separator className="my-8" />
               <ResetButton />
+              <Toaster />
             </div>
           </div>
         </div>
