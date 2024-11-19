@@ -47,15 +47,18 @@ const usePlayerStore = create<
           });
         },
         removePlayer: (playerID) => {
-          const filterActivePlayer = get().activePlayerList.filter(
+          const filterActivePlayers = get().activePlayerList.filter(
             (player) => player.id !== playerID
+          );
+          const filterInactivePlayers = get().activePlayerList.filter(
+            (player) => player.id === playerID
           );
           set({
             inActivePlayersList: [
               ...get().inActivePlayersList,
-              filterActivePlayer[0],
+              filterInactivePlayers[0],
             ].sort((a, b) => a.display_name.localeCompare(b.display_name)),
-            activePlayerList: filterActivePlayer,
+            activePlayerList: filterActivePlayers,
           });
         },
         setInActivePlayersList: (list) => {
@@ -80,7 +83,6 @@ const usePlayerStore = create<
           });
         },
       }),
-
       { name: "players" }
     )
   )
