@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import usePlayerStore from "../hooks/usePlayerStore";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
 import { PlayerState as PlayerType } from "../hooks/usePlayerStore";
@@ -7,11 +8,12 @@ import { colorVariantsTag } from "@/lib/utils";
 
 export default function WaitListTeam() {
   const { activePlayerList } = usePlayerStore();
-  const removePlayerAction = usePlayerStore((state) => state.removePlayer);
+  const { removePlayer } = usePlayerStore((state) => state);
   const { setWaitListHistory, clearHistory } = usePlayerStore((state) => state);
+  const { toast } = useToast();
 
   const handleRemoveBtn = (player: PlayerType) => {
-    removePlayerAction(player.id);
+    removePlayer(player.id);
   };
 
   const onClickHandle = () => {
@@ -20,6 +22,12 @@ export default function WaitListTeam() {
       timeStamp: new Date(),
     });
     clearHistory();
+    toast({
+      title: "Confirmed",
+      description: "Players have been added to the waitlist.",
+      className: "bg-green-100",
+      duration: 4000,
+    });
   };
 
   return (
@@ -30,7 +38,7 @@ export default function WaitListTeam() {
       <p className="text-sm text-muted-foreground mb-5 ">
         Confirm your teammates.
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
         {activePlayerList &&
           activePlayerList.map((player) => (
             <div
