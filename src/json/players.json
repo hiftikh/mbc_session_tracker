@@ -12,23 +12,12 @@
     "color": "green"
   },
   {
-    "id": 9925111,
-    "full_name": "Abraham Richardson",
-    "display_name": "Abraham R.",
-    "color": "green"
-  },
-  {
     "id": 2646073,
     "full_name": "Adison Barrett",
     "display_name": "Adison B.",
     "color": "red"
   },
-  {
-    "id": 8221874,
-    "full_name": "Adison Robinson",
-    "display_name": "Adison R.",
-    "color": "red"
-  },
+
   {
     "id": 4019404,
     "full_name": "Alan Harrison",
@@ -60,22 +49,10 @@
     "color": "blue"
   },
   {
-    "id": 6425292,
-    "full_name": "Alfred Myers",
-    "display_name": "Alfred M.",
-    "color": "red"
-  },
-  {
     "id": 558618,
     "full_name": "Alissa Barnes",
     "display_name": "Alissa B.",
     "color": "yellow"
-  },
-  {
-    "id": 3078966,
-    "full_name": "Alissa Douglas",
-    "display_name": "Alissa D.",
-    "color": "red"
   },
   {
     "id": 8175412,
@@ -171,13 +148,7 @@
     "id": 9878450,
     "full_name": "Edgar Gray",
     "display_name": "Edgar G.",
-    "color": "red"
-  },
-  {
-    "id": 392974,
-    "full_name": "Edgar Scott",
-    "display_name": "Edgar S.",
-    "color": "red"
+    "color": "green"
   },
   {
     "id": 2403945,
@@ -190,12 +161,6 @@
     "full_name": "Edward Morris",
     "display_name": "Edward M.",
     "color": "yellow"
-  },
-  {
-    "id": 7352282,
-    "full_name": "Edward Taylor",
-    "display_name": "Edward T.",
-    "color": "green"
   },
   {
     "id": 3605654,
@@ -264,12 +229,6 @@
     "color": "green"
   },
   {
-    "id": 6707403,
-    "full_name": "James Baker",
-    "display_name": "James B.",
-    "color": "red"
-  },
-  {
     "id": 4435960,
     "full_name": "James Kelly",
     "display_name": "James K.",
@@ -280,12 +239,6 @@
     "full_name": "Jared Perkins",
     "display_name": "Jared P.",
     "color": "green"
-  },
-  {
-    "id": 5193462,
-    "full_name": "Jessica Fowler",
-    "display_name": "Jessica F.",
-    "color": "red"
   },
   {
     "id": 2202615,
