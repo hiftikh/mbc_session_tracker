@@ -11,8 +11,6 @@ Built with:
 - [TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Lucide React](https://lucide.dev/guide/packages/lucide-react) - Icon Library
 
-Hosted on [Vercel](https://vercel.com/).
-
 ## Future Features
 
 - [ ] Add option to edit session
